@@ -1,0 +1,1 @@
+peletakan kode pertama
