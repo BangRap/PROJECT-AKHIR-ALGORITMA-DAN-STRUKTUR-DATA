@@ -30,3 +30,8 @@ def save_data(data):
         writer.writeheader()
         writer.writerows(data)
 #====
+
+#==== MASUK BAGIAN CRUD ====
+
+# 1.) CREATE (Lumaris)
+
