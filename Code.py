@@ -7,7 +7,7 @@ history_stack = []
 data = []          # Ini bakal buat list
 history_stack = [] # Ini ngebuat stack ya
 
-# (RAFLY YANG BUAT) INI FILE HANDLING ===
+# (RAFLY YANG BUAT) INI FILE HANDLING ===\
 def load_data():
   '''
   Buat ngeload data
