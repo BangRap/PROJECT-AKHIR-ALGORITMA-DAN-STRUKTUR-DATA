@@ -27,3 +27,24 @@ def save_data(data):
         
         writer.writeheader() 
         writer.writerows(data) 
+
+#============== Bagian CRUD ===================
+
+#=== CREATE (Made by Lumaris) ===
+def tambah_kamar(data):
+  kamar = {
+        "id": input("Masukkan ID kamar: "),
+        "nomor": input("Masukkan nomor kamar: "),
+        "lantai": input("Masukkan lantai kamar: "),
+        "harga": input("Masukkan harga kamar: "),
+        "status": "Kosong",
+        "penghuni": "-"
+}
+data.append(kamar)
+save_data(data)
+print("Kamar berhasil ditambahkan!")
+
+#=== READ (Made by Lumaris) ====
+def lihat_kamar(data):
+  for kamar in data:
+    print(f"ID: {kamar['id']}, Nomor: {kamar['nomor']}, Lantai: {kamar['lantai']}, Harga: {kamar['harga']}, Status: {kamar['status']}, Penghuni: {kamar['penghuni']}")
