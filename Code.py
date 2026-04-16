@@ -25,5 +25,5 @@ def save_data(data):
         fieldnames = ["id", "nomor", "lantai", "harga", "status", "penghuni"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         
-        writer.writeheader()   # tetap tulis header
-        writer.writerows(data) # isi ulang data
+        writer.writeheader() 
+        writer.writerows(data) 
