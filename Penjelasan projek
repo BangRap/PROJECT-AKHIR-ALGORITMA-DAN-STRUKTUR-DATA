@@ -1,0 +1,21 @@
+*TEMA :*
+Manajemen Kost-Kostan (Kelompok 24)
+
+*STRUKTUR DATA YANG DIPAKAI :*
+- Single Linked List
+- Stack
+
+*METODE SORTING :*
+
+
+*METODE SEARCHING :*
+
+
+*PENYIMPANAN FILE (DATABASE) :*
+TXT :
+- kamar.csv
+
+*PEMBAGIAN TUGAS:*
+- Rafly = FILE HANDLING, STRUKTUR DATA
+- Fahri = CRUD
+- Aris = CRUD
