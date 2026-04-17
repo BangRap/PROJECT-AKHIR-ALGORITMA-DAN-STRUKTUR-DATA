@@ -72,3 +72,41 @@ def hapus_kamar(data):
         if kamar["id"] == id_kamar:
             data.remove(kamar)
             save_data(data)
+
+# ==== MENU UTAMA ===
+def main():
+    data = load_data()
+
+    while True:
+        print("\n=== MANAJEMEN KOST ===")
+        print("1. Tambah Kamar")
+        print("2. Lihat Kamar")
+        print("3. Update Kamar")
+        print("4. Hapus Kamar")
+        print("5. Cari Kamar")
+        print("6. Sorting")
+        print("7. History")
+        print("0. Keluar")
+
+        pilih = input("Pilih menu: ")
+
+        if pilih == "1":
+            tambah_kamar(data)
+        elif pilih == "2":
+            lihat_kamar(data)
+        elif pilih == "3":
+            update_kamar(data)
+        elif pilih == "4":
+            hapus_kamar(data)
+        elif pilih == "5":
+            cari_kamar(data)
+        elif pilih == "6":
+            sorting_kamar(data)
+        elif pilih == "7":
+            lihat_history()
+        elif pilih == "0":
+            break
+        else:
+            print("Input tidak valid!")
+
+main()
