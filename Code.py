@@ -165,7 +165,7 @@ def hapus_kamar(sll):
             data.remove(kamar)
 
             save_data(data)
-<<<<<<< HEAD
+
             sll.rebuild(data)
 
             print("Data berhasil dihapus!")
@@ -227,12 +227,12 @@ def main():
         print("6. Sorting")
         print("7. History")
         print("0. Keluar")
->>>>>>> 0066d520a86e7b4390125e0c3038d39b0cb38430
+
 
         pilih = input("Pilih menu: ")
 
         if pilih == "1":
-<<<<<<< HEAD
+
             tambah_kamar(sll)
 
         elif pilih == "2":
@@ -281,4 +281,4 @@ menu()
             print("Input tidak valid!")
 
 main()
->>>>>>> 0066d520a86e7b4390125e0c3038d39b0cb38430
+
