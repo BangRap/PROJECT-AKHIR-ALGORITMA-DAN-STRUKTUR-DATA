@@ -54,3 +54,21 @@ def tambah_kamar(data):
 def lihat_kamar(data):
     for kamar in data:
         print(f"ID: {kamar['id']}, Nomor: {kamar['nomor']}, Lantai: {kamar['lantai']}, Harga: {kamar['harga']}, Status: {kamar['status']}, Penghuni: {kamar['penghuni']}")
+
+# === UPDATE ===
+def update_kamar(data):
+    id_kamar = input("ID: ")
+    for kamar in data:
+        if kamar["id"] == id_kamar:
+            kamar["penghuni"] = input("Nama: ")
+            kamar["status"] = "Terisi"
+            save_data(data)
+
+
+# === DELETE ===
+def hapus_kamar(data):
+    id_kamar = input("ID: ")
+    for kamar in data:
+        if kamar["id"] == id_kamar:
+            data.remove(kamar)
+            save_data(data)
