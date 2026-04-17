@@ -1,37 +1,44 @@
-import csv
+import csv  # untuk baca/tulis file CSV
 
-FILE_NAME = "kamar.csv"
+FILE_NAME = "kamar.csv"    # nama file penyimpanan data
 
 # ================= DATA GLOBAL =================
-data = []
-history_stack = []
+data = []    # list untuk menyimpan semua data kamar (struktur data utama)
+history_stack = []     # stack untuk menyimpan riwayat perubahan (undo)
+
 
 
 # ================= FILE HANDLING =================
 
 def load_data():
-    data = []
+    data = []     # list kosong untuk menampung data dari file
 
     try:
+        # buka file CSV dalam mode read
         with open(FILE_NAME, mode='r', newline='', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
+            reader = csv.DictReader(file)  # membaca CSV sebagai dictionary
 
             for row in reader:
-                data.append(row)
+                data.append(row) # setiap baris dimasukkan ke list
 
     except FileNotFoundError:
+         # jika file belum ada, program tidak error
         pass
 
-    return data
+    return data    # kembalikan data dalam bentuk list
 
 
 def save_data(data):
+     """
+    Fungsi untuk menyimpan data ke file CSV
+    """
     with open(FILE_NAME, mode='w', newline='', encoding='utf-8') as file:
+         # menentukan nama kolom
         fieldnames = ["id", "nomor", "lantai", "harga", "status", "penghuni"]
 
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(data)
+        writer.writeheader()  # menulis header kolom
+        writer.writerows(data) # menulis semua data ke file
 
 
 
@@ -40,8 +47,8 @@ def save_data(data):
 
 class Node:
     def __init__(self, data):
-        self.data = data
-        self.next = None
+        self.data = data  # menyimpan data kamar
+        self.next = None    # pointer ke node berikutnya
 
 
 class SingleLinkedList:
@@ -52,14 +59,14 @@ class SingleLinkedList:
         new_node = Node(kamar)
 
         if not self.head:
-            self.head = new_node
+            self.head = new_node # jika kosong, jadi head
             return
 
         temp = self.head
         while temp.next:
             temp = temp.next
 
-        temp.next = new_node
+        temp.next = new_node    # sambungkan node baru
 
     def rebuild(self, data):
         self.head = None
@@ -84,15 +91,19 @@ class SingleLinkedList:
 # ================= CRUD =================
 
 def tambah_kamar(sll):
+    '''
+    Fungsi CREATE: untuk nambahin data kamar baru
+    '''
     global data
-
+    
     id = input("ID: ")
     nomor = input("Nomor kamar: ")
     lantai = input("Lantai: ")
     harga = input("Harga: ")
-    status = input("Status: ")
-    penghuni = input("Penghuni: ")
+    status = input("Status: ") 
+    penghuni = input("Penghuni: ")  
 
+    # data disimpan dalam dictionary
     kamar = {
         "id": id,
         "nomor": nomor,
@@ -102,24 +113,28 @@ def tambah_kamar(sll):
         "penghuni": penghuni
     }
 
-    history_stack.append(data.copy())
+    history_stack.append(data.copy()) # simpan state lama ke stack
 
-    data.append(kamar)
-    save_data(data)
-    sll.tambah_kamar(kamar)
+    data.append(kamar) # tambah ke list
+    save_data(data) # simpan ke CSV
+    sll.tambah_kamar(kamar) # tambah ke linked list
 
     print("Kamar berhasil ditambahkan!")
 
 
 def lihat_kamar():
+    '''
+    Fungsi READ : untuk menampilkan semua data kamar
+    '''
     global data
-
+    
     if not data:
         print("Data kosong")
         return
-
+   
     print("\n===== DATA KAMAR =====")
 
+    # looping semua data
     for kamar in data:
         print(f"""
 ID       : {kamar['id']}
@@ -133,19 +148,22 @@ Penghuni : {kamar['penghuni']}
 
 
 def update_kamar(sll):
+    '''
+    Fungsi UPDATE: mengubah data kamar
+    '''
     global data
 
     id_kamar = input("Masukkan ID kamar: ")
 
     for kamar in data:
         if kamar["id"] == id_kamar:
-            history_stack.append(data.copy())
+            history_stack.append(data.copy())  simpan ke stack
 
             kamar["penghuni"] = input("Nama penghuni baru: ")
             kamar["status"] = "Terisi"
 
-            save_data(data)
-            sll.rebuild(data)
+            save_data(data) # update file
+            sll.rebuild(data)    # update linked list
 
             print("Data berhasil diupdate!")
             return
@@ -154,19 +172,22 @@ def update_kamar(sll):
 
 
 def hapus_kamar(sll):
+     """
+    Fungsi DELETE: menghapus data kamar
+    """
     global data
 
     id_kamar = input("Masukkan ID kamar: ")
 
     for kamar in data:
         if kamar["id"] == id_kamar:
-            history_stack.append(data.copy())
+            history_stack.append(data.copy())  # simpan ke stack
 
-            data.remove(kamar)
+            data.remove(kamar) # hapus dari list
 
-            save_data(data)
+            save_data(data) # update file
 
-            sll.rebuild(data)
+            sll.rebuild(data) # update linked list
 
             print("Data berhasil dihapus!")
             return
@@ -177,13 +198,16 @@ def hapus_kamar(sll):
 # ================= STACK UNDO =================
 
 def undo(sll):
+    """
+    Mengembalikan data ke kondisi sebelumnya (undo)
+    """
     global data
 
     if history_stack:
-        data = history_stack.pop()
+        data = history_stack.pop() # ambil data terakhir dari stack
 
-        save_data(data)
-        sll.rebuild(data)
+        save_data(data) # simpan ulang
+        sll.rebuild(data) # rebuild linked list
 
         print("Undo berhasil!")
 
@@ -194,12 +218,15 @@ def undo(sll):
 # ================= MENU =================
 
 def menu():
+     """
+    Fungsi utama program (menu interaktif)
+    """
     global data
 
-    data = load_data()
+    data = load_data() # load data dari file
 
     sll = SingleLinkedList()
-    sll.rebuild(data)
+    sll.rebuild(data) # bangun linked list dari data
 
     while True:
         print("""
